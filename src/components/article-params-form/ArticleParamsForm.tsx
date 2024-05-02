@@ -19,15 +19,15 @@ import clsx from 'clsx';
 import styles from './ArticleParamsForm.module.scss';
 
 type ArticleParamsFormProps = {
-	basicArticleState: (items: ArticleStateType) => void;
+	setBasicArticleState: (items: ArticleStateType) => void;
 };
 
 export const ArticleParamsForm = ({
-	basicArticleState,
+	setBasicArticleState,
 }: ArticleParamsFormProps) => {
 	const baseRef = useRef<HTMLFormElement>(null);
 	const [isOpen, setOpen] = useState(false);
-	const [appState, setAppState] =
+	const [formState, setFormState] =
 		useState<ArticleStateType>(defaultArticleState);
 
 	const toggleButtonForm = () => {
@@ -60,12 +60,12 @@ export const ArticleParamsForm = ({
 
 	const formSubmit = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		basicArticleState(appState);
+		setBasicArticleState(formState);
 	};
 
 	const formReset = () => {
-		basicArticleState(defaultArticleState);
-		setAppState(defaultArticleState);
+		setBasicArticleState(defaultArticleState);
+		setFormState(defaultArticleState);
 	};
 
 	return (
@@ -78,42 +78,44 @@ export const ArticleParamsForm = ({
 						Задайте параметры
 					</Text>
 					<Select
-						selected={appState.fontFamilyOption}
+						selected={formState.fontFamilyOption}
 						options={fontFamilyOptions}
 						onChange={(value) =>
-							setAppState({ ...appState, fontFamilyOption: value })
+							setFormState({ ...formState, fontFamilyOption: value })
 						}
 						title='Шрифт'
 					/>
 					<RadioGroup
 						name='fontSize'
 						options={fontSizeOptions}
-						selected={appState.fontSizeOption}
+						selected={formState.fontSizeOption}
 						onChange={(value) =>
-							setAppState({ ...appState, fontSizeOption: value })
+							setFormState({ ...formState, fontSizeOption: value })
 						}
 						title='Размер шрифта'
 					/>
 					<Select
-						selected={appState.fontColor}
+						selected={formState.fontColor}
 						options={fontColors}
-						onChange={(value) => setAppState({ ...appState, fontColor: value })}
+						onChange={(value) =>
+							setFormState({ ...formState, fontColor: value })
+						}
 						title='Цвет шрифта'
 					/>
 					<Separator />
 					<Select
-						selected={appState.backgroundColor}
+						selected={formState.backgroundColor}
 						options={backgroundColors}
 						onChange={(value) =>
-							setAppState({ ...appState, backgroundColor: value })
+							setFormState({ ...formState, backgroundColor: value })
 						}
 						title='Цвет фона'
 					/>
 					<Select
-						selected={appState.contentWidth}
+						selected={formState.contentWidth}
 						options={contentWidthArr}
 						onChange={(value) =>
-							setAppState({ ...appState, contentWidth: value })
+							setFormState({ ...formState, contentWidth: value })
 						}
 						title='Ширина контента'
 					/>
